@@ -11,7 +11,25 @@ call playGame function
 let humanScore = 0;
 let computerScore = 0;
 
-playGame();
+const winner = document.querySelector("#winner");
+winner.textContent = "Winner: ";
+
+const status = document.querySelector("#status");
+status.textContent = "Click a button to play!";
+
+const score = document.querySelector("#score");
+score.textContent = `${humanScore} : ${computerScore}`;
+
+const buttonContainer = document.querySelector(".button-container");
+buttonContainer.addEventListener("click", (event) => {
+  target = event.target;
+  return playRound(
+    target.id,
+    getComputerChoice()
+  );
+});
+
+// playGame();
 
 function playGame() {
   for (let i = 0; i < 5; i++) {
@@ -38,20 +56,21 @@ function playRound(humanChoice, computerChoice) {
   } else {
     lose(humanChoice, computerChoice);
   }
+  score.textContent = `${humanScore} : ${computerScore}`;
 }
 
 function lose(humanChoice, computerChoice) {
-  console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+  status.textContent = `You lose! ${computerChoice} beats ${humanChoice}`;
   computerScore++;
 }
 
 function win(humanChoice, computerChoice) {
-  console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+  status.textContent = `You win! ${humanChoice} beats ${computerChoice}`;
   humanScore++;
 }
 
 function tie(humanChoice, computerChoice) {
-  console.log(`Tie! ${humanChoice} and ${computerChoice}`);
+  status.textContent = `Tie! ${humanChoice} and ${computerChoice}`;
   computerScore++;
   humanScore++;
 }
