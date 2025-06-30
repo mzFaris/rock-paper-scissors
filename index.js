@@ -1,46 +1,39 @@
-/*
-initialize human and computer score
-call playGame function
-  loop for 5 time
-    TODO call playRound that take computerChoice and humanChoice
-      DONE get computerchoice
-      DONE get human choice
-    increament computerScore ot humanScore
-*/
-
 let humanScore = 0;
 let computerScore = 0;
+let continueGame = true;
 
 const winner = document.querySelector("#winner");
-winner.textContent = "Winner: ";
 
 const status = document.querySelector("#status");
-status.textContent = "Click a button to play!";
 
 const score = document.querySelector("#score");
-score.textContent = `${humanScore} : ${computerScore}`;
 
 const buttonContainer = document.querySelector(".button-container");
 buttonContainer.addEventListener("click", (event) => {
   target = event.target;
-  return playRound(
+  playRound(
     target.id,
     getComputerChoice()
   );
 });
 
-// playGame();
+playGame();
 
 function playGame() {
-  for (let i = 0; i < 5; i++) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
+  humanScore = 0;
+  computerScore = 0;
+  winner.textContent = "";
+  score.textContent = `${humanScore} : ${computerScore}`;
+  status.textContent = "Click a button to play!";
+}
+
+function endGame() {
   if (humanScore > computerScore) {
-    console.log("YOU WIN!");
+    winner.textContent = "YOU WIN!";
   } else if (humanScore < computerScore) {
-    console.log("YOU LOSE!");
+    winner.textContent = "YOU LOSE!";
   } else {
-    console.log("TIE!");
+    winner.textContent = "TIE!";
   }
 }
 
@@ -57,6 +50,9 @@ function playRound(humanChoice, computerChoice) {
     lose(humanChoice, computerChoice);
   }
   score.textContent = `${humanScore} : ${computerScore}`;
+  if (humanScore >= 5 || computerScore >= 5) {
+    endGame();
+  }
 }
 
 function lose(humanChoice, computerChoice) {
